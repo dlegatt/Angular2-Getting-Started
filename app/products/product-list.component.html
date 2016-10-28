@@ -34,7 +34,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let p of products">
+                <tr *ngFor="let p of products | productFilter:listFilter">
                     <td>
                         <img
                                 *ngIf="showImage"
@@ -49,7 +49,11 @@
                     <td>{{p.productCode | lowercase}}</td>
                     <td>{{p.releaseDate}}</td>
                     <td>{{p.price | currency:'USD':true:'1.2-2'}}</td>
-                    <td>{{p.starRating}}</td>
+                    <td>
+                        <ai-star [rating]="p.starRating"
+                                 (ratingClicked)="onRatingClicked($event)">
+                        </ai-star>
+                    </td>
                 </tr>
             </tbody>
         </table>

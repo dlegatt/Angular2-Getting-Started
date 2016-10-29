@@ -3,7 +3,6 @@ import { IProduct } from './product';
 import {ProductService} from "./product.service";
 
 @Component({
-    selector: 'pm-products',
     moduleId: module.id,
     templateUrl: 'product-list.component.html',
     styleUrls: [
@@ -11,7 +10,7 @@ import {ProductService} from "./product.service";
     ]
 })
 export class ProductListComponent implements OnInit{
-    private _errorMessage;
+    private _errorMessage: string;
     pageTitle: string = 'Product List';
     imageWidth: number = 50;
     imageMargin: number = 2;
@@ -29,9 +28,8 @@ export class ProductListComponent implements OnInit{
     ngOnInit(): void {
         this._productService.getProducts()
             .subscribe(
-                products => {
-                    this.products = <IProduct[]>products;
-                },
+                products =>
+                    this.products = products,
                 error => this._errorMessage = <any>error
             );
     }

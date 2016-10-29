@@ -25,7 +25,7 @@ var ProductListComponent = (function () {
         var _this = this;
         this._productService.getProducts()
             .subscribe(function (products) {
-            _this.products = products;
+            return _this.products = products;
         }, function (error) { return _this._errorMessage = error; });
     };
     ProductListComponent.prototype.onRatingClicked = function (message) {
@@ -33,7 +33,6 @@ var ProductListComponent = (function () {
     };
     ProductListComponent = __decorate([
         core_1.Component({
-            selector: 'pm-products',
             moduleId: module.id,
             templateUrl: 'product-list.component.html',
             styleUrls: [

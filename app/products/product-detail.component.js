@@ -9,22 +9,24 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var ProductFilterPipe = (function () {
-    function ProductFilterPipe() {
+var router_1 = require("@angular/router");
+var ProductDetailComponent = (function () {
+    function ProductDetailComponent(_route) {
+        this._route = _route;
+        this.pageTitle = 'Product Detail';
+        console.log(this._route.snapshot.params['id']);
     }
-    ProductFilterPipe.prototype.transform = function (value, filterBy) {
-        filterBy = filterBy ? filterBy.toLocaleLowerCase() : null;
-        return filterBy ? value.filter(function (product) {
-            return product.productName.toLocaleLowerCase().indexOf(filterBy) !== -1;
-        }) : value;
+    ProductDetailComponent.prototype.ngOnInit = function () {
+        var id = +this._route.snapshot.params['id'];
+        this.pageTitle += ": " + id;
     };
-    ProductFilterPipe = __decorate([
-        core_1.Pipe({
-            name: 'productFilter'
+    ProductDetailComponent = __decorate([
+        core_1.Component({
+            templateUrl: 'app/products/product-detail.component.html'
         }), 
-        __metadata('design:paramtypes', [])
-    ], ProductFilterPipe);
-    return ProductFilterPipe;
+        __metadata('design:paramtypes', [router_1.ActivatedRoute])
+    ], ProductDetailComponent);
+    return ProductDetailComponent;
 }());
-exports.ProductFilterPipe = ProductFilterPipe;
-//# sourceMappingURL=product-filter.pipe.js.map
+exports.ProductDetailComponent = ProductDetailComponent;
+//# sourceMappingURL=product-detail.component.js.map

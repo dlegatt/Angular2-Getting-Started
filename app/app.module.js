@@ -11,11 +11,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var platform_browser_1 = require('@angular/platform-browser');
 var forms_1 = require('@angular/forms');
+var router_1 = require("@angular/router");
+var http_1 = require("@angular/http");
 var app_component_1 = require('./app.component');
 var product_list_component_1 = require('./products/product-list.component');
 var product_filter_pipe_1 = require("./products/product-filter.pipe");
 var star_component_1 = require("./shared/star.component");
-var http_1 = require("@angular/http");
+var product_detail_component_1 = require("./products/product-detail.component");
+var welcome_component_1 = require("./home/welcome.component");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -24,13 +27,22 @@ var AppModule = (function () {
             imports: [
                 platform_browser_1.BrowserModule,
                 http_1.HttpModule,
-                forms_1.FormsModule
+                forms_1.FormsModule,
+                router_1.RouterModule.forRoot([
+                    { path: 'product', component: product_list_component_1.ProductListComponent },
+                    { path: 'product/:id', component: product_detail_component_1.ProductDetailComponent },
+                    { path: 'welcome', component: welcome_component_1.WelcomeComponent },
+                    { path: '', redirectTo: 'welcome', pathMatch: 'full' },
+                    { path: '**', redirectTo: 'welcome', pathMatch: 'full' }
+                ])
             ],
             declarations: [
                 app_component_1.AppComponent,
                 product_filter_pipe_1.ProductFilterPipe,
                 star_component_1.StarComponent,
-                product_list_component_1.ProductListComponent
+                product_detail_component_1.ProductDetailComponent,
+                product_list_component_1.ProductListComponent,
+                welcome_component_1.WelcomeComponent
             ],
             bootstrap: [app_component_1.AppComponent]
         }), 

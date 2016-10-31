@@ -17,12 +17,17 @@ require('rxjs/add/operator/catch');
 var ProductService = (function () {
     function ProductService(_http) {
         this._http = _http;
-        this._productUrl = 'api/products/products.json';
+        this._productUrl = 'http://localhost:8000/api.php/product';
     }
     ProductService.prototype.getProducts = function () {
         return this._http.get(this._productUrl)
             .map(function (response) { return response.json(); })
             .do(function (data) { return console.log('Data retrieved from server'); })
+            .catch(this.handleError);
+    };
+    ProductService.prototype.getProduct = function (id) {
+        return this._http.get(this._productUrl + '/' + id)
+            .map(function (response) { return response.json(); })
             .catch(this.handleError);
     };
     ProductService.prototype.handleError = function (error) {

@@ -8,7 +8,8 @@ import 'rxjs/add/operator/catch';
 
 @Injectable()
 export class ProductService {
-    private _productUrl = 'api/products/products.json';
+    private _productUrl = 'http://localhost:8000/api.php/product';
+
     constructor(private _http: Http){}
 
     getProducts(): Observable<IProduct[]> {
@@ -17,7 +18,11 @@ export class ProductService {
             .do(data => console.log('Data retrieved from server'))
             .catch(this.handleError);
     }
-
+    getProduct(id: number): Observable<IProduct>{
+        return this._http.get(this._productUrl + '/' + id)
+            .map((response: Response) => <IProduct> response.json())
+            .catch(this.handleError);
+    }
     private handleError(error: Response) {
         console.error(error);
         return Observable.throw(error.json().error ||'Server Error');

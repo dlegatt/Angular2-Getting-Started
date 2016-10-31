@@ -17,6 +17,7 @@ export class ProductListComponent implements OnInit{
     showImage: boolean = false;
     listFilter: string ;
     products: IProduct[];
+    message: string;
 
     constructor(private _productService: ProductService) {
     }

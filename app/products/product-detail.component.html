@@ -1,5 +1,36 @@
-<div class="panel panel-primary">
+<div class="panel panel-primary" *ngIf="product">
     <div class="panel-heading">
-        {{pageTitle}}
+        {{pageTitle + ': ' + product.productName}}
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-3">Name:</div>
+                    <div class="col-md-6">{{product.productName}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">Code:</div>
+                    <div class="col-md-6">{{product.productName}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">Description:</div>
+                    <div class="col-md-6">{{product.productName}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">:</div>
+                    <div class="col-md-6">{{product.productName}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">Name:</div>
+                    <div class="col-md-6">{{product.productName}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel-footer">
+        <a class="btn btn-default" (click)="onBack()">
+            <span class="glyphicon glyphicon-chevron-left"></span> Back
+        </a>
     </div>
 </div>

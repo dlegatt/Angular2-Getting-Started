@@ -17,7 +17,6 @@ var ProductDetailComponent = (function () {
         this._productService = _productService;
         this._router = _router;
         this.pageTitle = 'Product Detail';
-        console.log(this._route.snapshot.params['id']);
     }
     ProductDetailComponent.prototype.ngOnInit = function () {
         var id = +this._route.snapshot.params['id'];
@@ -29,8 +28,8 @@ var ProductDetailComponent = (function () {
     };
     ProductDetailComponent.prototype.getProduct = function (id) {
         var _this = this;
-        this._productService.getProduct(id)
-            .subscribe(function (product) { return _this.product = product; }, function (error) { return _this.errorMessage = error; });
+        this._productService.getProducts()
+            .subscribe(function (products) { return _this.product = products.find(function (p) { return p.productId === id; }); }, function (error) { return _this.errorMessage = error; });
     };
     ProductDetailComponent = __decorate([
         core_1.Component({

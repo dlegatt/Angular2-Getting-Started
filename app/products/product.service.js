@@ -14,21 +14,45 @@ var Observable_1 = require("rxjs/Observable");
 require('rxjs/add/operator/map');
 require('rxjs/add/operator/do');
 require('rxjs/add/operator/catch');
+require('rxjs/add/observable/of');
+require('rxjs/add/operator/share');
 var ProductService = (function () {
     function ProductService(_http) {
         this._http = _http;
         this._productUrl = 'http://localhost:8000/api.php/product';
     }
-    ProductService.prototype.getProducts = function () {
-        return this._http.get(this._productUrl)
-            .map(function (response) { return response.json(); })
-            .do(function (data) { return console.log('Data retrieved from server'); })
-            .catch(this.handleError);
-    };
     ProductService.prototype.getProduct = function (id) {
-        return this._http.get(this._productUrl + '/' + id)
-            .map(function (response) { return response.json(); })
-            .catch(this.handleError);
+        if (!this._products) {
+            this._fetchProducts().subscribe(function (products) { return console.log(products); }, function (error) { return console.log(error); });
+        }
+        else {
+            return Observable_1.Observable.of(this._products.find(function (p) { return p.productId === id; }));
+        }
+    };
+    ProductService.prototype.getProducts = function () {
+        if (this._products) {
+            return Observable_1.Observable.of(this._products);
+        }
+        else if (this._observable) {
+            return this._observable;
+        }
+        else {
+            return this._fetchProducts();
+        }
+    };
+    ProductService.prototype._fetchProducts = function () {
+        var _this = this;
+        this._observable = this._http.get(this._productUrl)
+            .map(function (response) {
+            return response.json();
+        })
+            .do(function (val) {
+            _this._products = val;
+            _this._observable = null;
+        })
+            .catch(this.handleError)
+            .share();
+        return this._observable;
     };
     ProductService.prototype.handleError = function (error) {
         console.error(error);

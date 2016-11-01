@@ -14,7 +14,6 @@ export class ProductDetailComponent implements OnInit {
     constructor(private _route: ActivatedRoute,
                 private _productService: ProductService,
                 private _router: Router) {
-        console.log(this._route.snapshot.params['id']);
     }
 
     ngOnInit(): void {
@@ -28,9 +27,11 @@ export class ProductDetailComponent implements OnInit {
     }
 
     getProduct(id: number) {
-        this._productService.getProduct(id)
+        this._productService.getProducts()
             .subscribe(
-                product => this.product = product,
+                products => this.product = products.find(
+                    p => p.productId === id
+                ),
                 error => this.errorMessage = <any>error
             );
     }

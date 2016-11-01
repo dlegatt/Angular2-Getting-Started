@@ -4,7 +4,7 @@ require_once __DIR__.'/../vendor/autoload.php';
 
 $app = new Silex\Application();
 $app->register(new JDesrosiers\Silex\Provider\CorsServiceProvider(),[
-    'cors.allowOrigin' => 'http://localhost:3000']);
+    'cors.allowOrigin' => 'http://10.1.40.182:3000']);
 $app->after($app['cors']);
 $app->get('/product', function() {
     $products = json_decode(file_get_contents('products.json'), true);

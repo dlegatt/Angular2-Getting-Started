@@ -21,7 +21,6 @@ var ProductDetailComponent = (function () {
     }
     ProductDetailComponent.prototype.ngOnInit = function () {
         var id = +this._route.snapshot.params['id'];
-        this.pageTitle += ": " + id;
         this.getProduct(id);
     };
     ProductDetailComponent.prototype.onBack = function () {

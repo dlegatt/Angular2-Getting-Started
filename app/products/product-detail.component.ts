@@ -17,19 +17,50 @@ export class ProductDetailComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        let id = +this._route.snapshot.params['id'];
-        this.getProduct(id);
+        var id: number;
+        this._route.params.subscribe(
+            params => this.getProduct(+params['id'])
+        );
+        console.log('init');
     }
 
     onBack(): void {
         this._router.navigate(['/product']);
     }
 
+    onNext($event): void {
+        this._productService.getProducts()
+            .subscribe(
+                products => {
+                    let idx = products.indexOf(this.product);
+                    if (idx+1<products.length) {
+                        this._router.navigate(['/product', products[idx+1].productId]);
+                    }
+                    return false;
+                }
+            )
+    }
+
+    onPrev($event): void {
+        this._productService.getProducts()
+            .subscribe(
+                products => {
+                    let idx = products.indexOf(this.product);
+                    if (idx === 0) {
+                        return false;
+                    }
+                    this._router.navigate(['/product', products[idx-1].productId]);
+                }
+            )
+    }
+
     getProduct(id: number) {
         this._productService.getProducts()
             .subscribe(
                 products => this.product = products.find(
-                    p => p.productId === id
+                    p => {
+                        return p.productId === id;
+                    }
                 ),
                 error => this.errorMessage = <any>error
             );

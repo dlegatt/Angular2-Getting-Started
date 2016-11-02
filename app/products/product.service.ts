@@ -11,7 +11,7 @@ import 'rxjs/add/operator/share';
 @Injectable()
 export class ProductService {
 
-    private _productUrl = 'http://10.1.40.182:8000/api.php/product';
+    private _productUrl = 'http://localhost:8000/api.php/product';
     private _products: IProduct[];
     private _observable: Observable<IProduct[]>;
     constructor(private _http: Http){}

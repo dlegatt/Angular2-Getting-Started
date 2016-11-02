@@ -6,12 +6,14 @@ import {ProductDetailGuard} from "./product-guard.service";
 import {ProductService} from "./product.service";
 import {ProductRoutingModule} from "./product-routing.module";
 import {SharedModule} from "../shared/shared.module";
+import {ProductBrowserComponent} from "./product-browser.component";
 
 @NgModule({
     declarations: [
         ProductListComponent
         ,ProductDetailComponent
         ,ProductFilterPipe
+        ,ProductBrowserComponent
     ]
     ,imports: [
         ProductRoutingModule

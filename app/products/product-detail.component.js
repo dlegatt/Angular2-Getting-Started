@@ -19,16 +19,42 @@ var ProductDetailComponent = (function () {
         this.pageTitle = 'Product Detail';
     }
     ProductDetailComponent.prototype.ngOnInit = function () {
-        var id = +this._route.snapshot.params['id'];
-        this.getProduct(id);
+        var _this = this;
+        var id;
+        this._route.params.subscribe(function (params) { return _this.getProduct(+params['id']); });
+        console.log('init');
     };
     ProductDetailComponent.prototype.onBack = function () {
         this._router.navigate(['/product']);
     };
+    ProductDetailComponent.prototype.onNext = function ($event) {
+        var _this = this;
+        this._productService.getProducts()
+            .subscribe(function (products) {
+            var idx = products.indexOf(_this.product);
+            if (idx + 1 < products.length) {
+                _this._router.navigate(['/product', products[idx + 1].productId]);
+            }
+            return false;
+        });
+    };
+    ProductDetailComponent.prototype.onPrev = function ($event) {
+        var _this = this;
+        this._productService.getProducts()
+            .subscribe(function (products) {
+            var idx = products.indexOf(_this.product);
+            if (idx === 0) {
+                return false;
+            }
+            _this._router.navigate(['/product', products[idx - 1].productId]);
+        });
+    };
     ProductDetailComponent.prototype.getProduct = function (id) {
         var _this = this;
         this._productService.getProducts()
-            .subscribe(function (products) { return _this.product = products.find(function (p) { return p.productId === id; }); }, function (error) { return _this.errorMessage = error; });
+            .subscribe(function (products) { return _this.product = products.find(function (p) {
+            return p.productId === id;
+        }); }, function (error) { return _this.errorMessage = error; });
     };
     ProductDetailComponent = __decorate([
         core_1.Component({
